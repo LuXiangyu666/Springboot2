@@ -32,7 +32,7 @@ public class AdminProductController {
     private String swiperImagesFilePath;
 
 
-    /**根据条件分页查询 */
+    /**根据条件分页查询*/
     @RequestMapping("/list")
     public R list(@RequestBody PageBean pageBean){
         System.out.println(pageBean);
@@ -63,7 +63,7 @@ public class AdminProductController {
         return R.ok();
     }
 
-    /**更新swiper状态*/
+    /**更新swiper状态 */
     @GetMapping("/updateSwiper/{id}/state/{swiper}")
     public R updateSwiper(@PathVariable(value = "id")Integer id,@PathVariable(value = "swiper")boolean swiper){
         Product product = productService.getById(id);
@@ -72,18 +72,14 @@ public class AdminProductController {
         return R.ok();
     }
 
-    /**
-     * 删除
-     * @param id
-     * @return
-     */
+    /**删除 */
     @GetMapping("/delete/{id}")
     public R delete(@PathVariable(value = "id")Integer id){
         productService.removeById(id);
         return R.ok();
     }
 
-    /**上传商品大类图片*/
+    /**上传商品大类图片 */
     @RequestMapping("/uploadImage")
     public Map<String,Object> uploadImage(MultipartFile file)throws Exception{
         Map<String,Object> resultMap=new HashMap<>();
@@ -135,7 +131,7 @@ public class AdminProductController {
         return R.ok();
     }
 
-    /**根据id查询*/
+    /**根据id查询  */
     @GetMapping("/{id}")
     public R findById(@PathVariable(value = "id")Integer id){
         Product product = productService.findById(id);

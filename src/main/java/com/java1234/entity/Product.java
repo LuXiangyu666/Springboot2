@@ -21,11 +21,15 @@ public class Product {
 
     private BigDecimal price; // 价格
 
-    private String productIntroImgs; // 商品介绍图片
-
-    private String productParaImgs;  // 商品规格参数图片
+//    private String productIntroImgs; // 商品介绍图片
+//
+//    private String productParaImgs;  // 商品规格参数图片
 
     private Integer stock; // 库存
+
+    private String chooseMode;  //交易方式  11111111111111111111111
+
+    private Integer typeId;     //商品类别id    1111111111111111
 
     private String proPic="default.jpg"; // 商品图片
 
@@ -39,6 +43,16 @@ public class Product {
 
     private String description; // 描述
 
+    private String address;   //卖家地址    1111111111111111
+
+    private float longitude;  //卖家经度    11111111111111111
+
+    private float latitude;   //卖家纬度    111111111111111
+
+    private Integer sellerId;   //卖家的id     1111111111111
+
+    private Date createDate;    //商品创建时间    1111111111111
+
     @JsonSerialize(using=CustomDateTimeSerializer.class)
     @TableField(updateStrategy = FieldStrategy.IGNORED)
     private Date hotDateTime; // 设置热门推荐日期时间
@@ -48,5 +62,8 @@ public class Product {
 
     @TableField(select = false)
     private SmallType type; // 商品类别
+
+    @TableField(select = false,exist = false)
+    private ProductSwiperImage[] swiperTab; // 轮播图片       111111111
 
 }

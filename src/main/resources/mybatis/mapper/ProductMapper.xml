@@ -30,8 +30,12 @@
     </select>
 
     <insert id="add" parameterType="com.java1234.entity.Product">
-        insert into t_product values(null,#{name},#{price},#{stock},#{proPic},#{hot},#{swiper},#{swiperPic},#{swiperSort},#{type.id},null,#{productIntroImgs},#{productParaImgs},#{description});
+        insert into t_product values(null,#{name},#{price},#{stock},#{proPic},#{hot},#{swiper},#{swiperPic},#{swiperSort},#{type.id},null,#{description});
     </insert>
+
+    <!-- <insert id="add" parameterType="com.java1234.entity.Product">
+        insert into t_product values(null,#{name},#{price},#{stock},#{proPic},#{hot},#{swiper},#{swiperPic},#{swiperSort},#{type.id},null,#{productIntroImgs},#{productParaImgs},#{description});
+    </insert> -->
 
     <update id="update" parameterType="com.java1234.entity.Product">
         update t_product
@@ -54,12 +58,12 @@
             <if test="description!=null and description!=''">
                 description=#{description},
             </if>
-            <if test="productIntroImgs!=null and productIntroImgs!=''">
+            <!-- <if test="productIntroImgs!=null and productIntroImgs!=''">
                 productIntroImgs=#{productIntroImgs},
             </if>
             <if test="productParaImgs!=null and productParaImgs!=''">
                 productParaImgs=#{productParaImgs},
-            </if>
+            </if> -->
             <if test="swiperPic!=null and swiperPic!=''">
                 swiperPic=#{swiperPic},
             </if>

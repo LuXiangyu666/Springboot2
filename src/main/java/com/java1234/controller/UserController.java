@@ -69,6 +69,8 @@ public class UserController {
         String token = JwtUtils.createJWT(openid, wxUserInfo.getNickName(), SystemConstant.JWT_TTL);
         Map<String,Object> resultMap=new HashMap<>();
         resultMap.put("token",token);
+        WxUserInfo User = wxUserInfoService.getOne(new QueryWrapper<WxUserInfo>().eq("openid", openid));
+        resultMap.put("id",User.getId());
         return R.ok(resultMap);
     }
 }

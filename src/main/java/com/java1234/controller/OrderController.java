@@ -3,10 +3,7 @@ package com.java1234.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.java1234.constant.SystemConstant;
-import com.java1234.entity.Order;
-import com.java1234.entity.OrderDetail;
-import com.java1234.entity.Product;
-import com.java1234.entity.R;
+import com.java1234.entity.*;
 import com.java1234.properties.WeixinpayProperties;
 import com.java1234.service.IOrderDetailService;
 import com.java1234.service.IOrderService;
@@ -186,45 +183,45 @@ public class OrderController {
 
 
     //创建新商品，返回商品id
-//    @RequestMapping("/createProduct")
-//    @Transactional
-//    public R create(@RequestBody Product product, @RequestHeader(value = "token") String token){
-//        //通过token获取openID
-//        System.out.println("token = "+token);
-//        System.out.println("product = "+product);
-//
-//
-//        //添加商品到数据库
-//        Claims claims = JwtUtils.validateJWT(token).getClaims();
+    @RequestMapping("/createProduct")
+    @Transactional
+    public R create(@RequestBody Product product, @RequestHeader(value = "token") String token){
+        //通过token获取openID
+        System.out.println("token = "+token);
+        System.out.println("product = "+product);
+
+
+        //添加商品到数据库
+        Claims claims = JwtUtils.validateJWT(token).getClaims();
 //        if(claims!=null){
 //            System.out.println("openid="+claims.getId());
 //            product.setWoner_id(claims.getId());
 //        }
-//
-//        product.setCreateDate(new Date());
-//
-//        //OrderDetail[] goods = product.getGoods();
-//        ProductSwiperImage[] swiperTab = product.getSwiperTab();
-//
-//        System.out.println(product.getSwiperTab());
-//        System.out.println("swiperTab="+swiperTab);
-//
-//        productService.save(product);
-//
-//        //添加商品轮播图到数据库
-//        for(int i=0; i<swiperTab.length; i++){
-//            ProductSwiperImage productSwiperImage = swiperTab[i];
-//            //OrderDetail orderDetail = goods[i];
-//            productSwiperImage.setProductId(product.getId());
-//            //orderDetail.setMId(product.getId());
-//            productSwiperImageService.save(productSwiperImage);
-//        }
-//
-//
-//        Map<String,Object> resultMap=new HashMap<>();
-//        resultMap.put("productId",product.getId());
-//        return R.ok(resultMap);       //返回商品id
-//    }
+
+        product.setCreateDate(new Date());
+
+        //OrderDetail[] goods = product.getGoods();
+        ProductSwiperImage[] swiperTab = product.getSwiperTab();
+
+        System.out.println(product.getSwiperTab());
+        System.out.println("swiperTab="+swiperTab);
+
+        productService.save(product);
+
+        //添加商品轮播图到数据库
+        for(int i=0; i<swiperTab.length; i++){
+            ProductSwiperImage productSwiperImage = swiperTab[i];
+            //OrderDetail orderDetail = goods[i];
+            productSwiperImage.setProductId(product.getId());
+            //orderDetail.setMId(product.getId());
+            productSwiperImageService.save(productSwiperImage);
+        }
+
+
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("productId",product.getId());
+        return R.ok(resultMap);       //返回商品id
+    }
 
 
 
