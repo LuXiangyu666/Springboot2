@@ -67,5 +67,16 @@ public class ProductController {
         return R.ok(map);
     }
 
+    /**我的商品列表*/
+    @GetMapping("/myproduct")
+    public R myproduct(Integer id){
+        Page<Product> page=new Page<>(0,10);
+        Page<Product> pageProduct = productService.page(page, new QueryWrapper<Product>().eq("sellerId", id));
+        List<Product> myProductList = pageProduct.getRecords();
+        Map<String,Object> map=new HashMap<>();
+        map.put("message",myProductList);
+        return R.ok(map);
+    }
+
 
 }
