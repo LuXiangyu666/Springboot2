@@ -1,17 +1,21 @@
 package com.java1234.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.java1234.entity.Product;
 import com.java1234.entity.ProductSwiperImage;
 import com.java1234.entity.R;
+import com.java1234.mapper.ProductMapper;
 import com.java1234.service.IProductService;
 import com.java1234.service.IProductSwiperImageService;
+import com.java1234.util.JwtUtils;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +80,14 @@ public class ProductController {
         Map<String,Object> map=new HashMap<>();
         map.put("message",myProductList);
         return R.ok(map);
+    }
+
+    /**修改我的商品 */
+    @RequestMapping("/revise")
+    public R save(@RequestBody Product product){
+        productService.update(product);
+        return R.ok();
+
     }
 
 

@@ -3,8 +3,10 @@ package com.java1234.entity;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -51,8 +53,14 @@ public class Product {
 
     private Integer sellerId;   //卖家的id     1111111111111
 
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")            //加入时间格式注解
     private Date createDate;    //商品创建时间    1111111111111
 
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")           //加入时间格式注解
     @JsonSerialize(using=CustomDateTimeSerializer.class)
     @TableField(updateStrategy = FieldStrategy.IGNORED)
     private Date hotDateTime; // 设置热门推荐日期时间

@@ -123,6 +123,7 @@ public class AdminProductController {
     /**添加或者修改 */
     @RequestMapping("/save")
     public R save(@RequestBody Product product){
+        System.out.println("前端传来的product：" +product);
         if(product.getId()==null || product.getId()==-1){
             productService.add(product);
         }else{
