@@ -19,7 +19,10 @@ public class WxUserInfo implements Serializable {
 
     private String nickName; // 用户昵称
 
-    private String avatarUrl; // 用户头像图片的 URL
+    private String avatarUrl; // 用户头像图片的临时地址URL
+
+    private String wxuserImg; // 用户头像上传后的图片名
+
 
     @JsonSerialize(using=CustomDateTimeSerializer.class)
     private Date registerDate; // 注册日期

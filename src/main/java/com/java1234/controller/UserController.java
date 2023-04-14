@@ -62,6 +62,7 @@ public class UserController {
             System.out.println("存在 更新用户");
             resultWxUserInfo.setNickName(wxUserInfo.getNickName());
             resultWxUserInfo.setAvatarUrl(wxUserInfo.getAvatarUrl());
+            resultWxUserInfo.setWxuserImg(wxUserInfo.getWxuserImg());
             resultWxUserInfo.setLastLoginDate(new Date());
             wxUserInfoService.updateById(resultWxUserInfo);     //由于插入的记录缺少id,所以没法更新。
         }
