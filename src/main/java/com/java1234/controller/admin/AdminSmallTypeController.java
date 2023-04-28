@@ -39,6 +39,7 @@ public class AdminSmallTypeController {
 
         Map<String,Object> resultMap=new HashMap<>();
         resultMap.put("smallTypeList",smallTypeList);
+        System.out.println(smallTypeList);
         resultMap.put("total",total);
         return R.ok(resultMap);
     }

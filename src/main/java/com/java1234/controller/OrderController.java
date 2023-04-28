@@ -15,10 +15,7 @@ import javafx.scene.input.TouchEvent;
 import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
 import java.util.*;
@@ -259,6 +256,19 @@ public class OrderController {
 
         resultMap.put("orderList",orderList);
         return R.ok(resultMap);
+    }
+
+    /**我的商品列表*/
+    @GetMapping("/productIdList")
+    public R productList(Integer id){
+        Page<OrderDetail> page=new Page<>(0,10);
+        Page<OrderDetail> pageProduct = orderDetailService.page(page, new QueryWrapper<OrderDetail>().eq("mId", id).orderByAsc("id"));
+        List<OrderDetail> productIdList = pageProduct.getRecords();
+        Map<String,Object> map=new HashMap<>();
+        map.put("message",productIdList);
+        return R.ok(map);
+
+//        OrderDetail a = orderDetailService.getOne(new QueryWrapper<Order>().eq("mId", id));
     }
 
 

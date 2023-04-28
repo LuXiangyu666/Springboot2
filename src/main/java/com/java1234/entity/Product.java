@@ -53,6 +53,7 @@ public class Product {
 
     private Integer sellerId;   //卖家的id     1111111111111
 
+    private Integer state =1; // 商品状态 1 审核中 2 已上架 3 未发货 4 已发货 5 已卖出
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")            //加入时间格式注解

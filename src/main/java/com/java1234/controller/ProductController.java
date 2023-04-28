@@ -3,6 +3,7 @@ package com.java1234.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.java1234.entity.Order;
 import com.java1234.entity.Product;
 import com.java1234.entity.ProductSwiperImage;
 import com.java1234.entity.R;
@@ -34,17 +35,19 @@ public class ProductController {
     /**查询轮播商品*/
     @GetMapping("/findSwiper")
     public R findSwiper(){
-        List<Product> swiperProductList = productService.list(new QueryWrapper<Product>().eq("isSwiper", true).orderByAsc("swiperSort"));
+        List<Product> swiperProductList = productService.list(new QueryWrapper<Product>().eq("isSwiper", true).eq("state",2).orderByAsc("swiperSort"));
         Map<String,Object> map=new HashMap<>();
         map.put("message",swiperProductList);
         return R.ok(map);
     }
 
+
+
     /**查询热门推荐商品8个*/
     @GetMapping("/findHot")
     public R findHot(){
         Page<Product> page=new Page<>(0,8);
-        Page<Product> pageProduct = productService.page(page, new QueryWrapper<Product>().eq("isHot", true).orderByAsc("hotDateTime"));
+        Page<Product> pageProduct = productService.page(page, new QueryWrapper<Product>().eq("isHot", true).eq("state",2).orderByAsc("hotDateTime"));
         List<Product> hotProductList = pageProduct.getRecords();
         Map<String,Object> map=new HashMap<>();
         map.put("message",hotProductList);
@@ -65,7 +68,7 @@ public class ProductController {
     /**商品搜索*/
     @GetMapping("/search")
     public R search(String q){
-        List<Product> productList = productService.list(new QueryWrapper<Product>().like("name", q));
+        List<Product> productList = productService.list(new QueryWrapper<Product>().like("name", q).eq("state",2));
         Map<String,Object> map=new HashMap<>();
         map.put("message",productList);
         return R.ok(map);
@@ -87,8 +90,46 @@ public class ProductController {
     public R save(@RequestBody Product product){
         productService.update(product);
         return R.ok();
-
     }
+
+//    11111111111111111111111111
+//    /**更新订单状态*/
+//    @PostMapping("/updateStatus")
+//    public R updateStatus(@RequestBody Order order){
+//        Order resultOrder = orderService.getById(order.getId());
+//        resultOrder.setStatus(order.getStatus());
+//        orderService.saveOrUpdate(resultOrder);
+//        return R.ok();
+//    }
+//    1111111111111111111111111
+
+    /**卖家发货*/
+    @RequestMapping("/fahuo")
+    public R fahuo(Integer id){
+        Product resultProduct = productService.getById(id);
+        resultProduct.setState(4);
+        productService.saveOrUpdate(resultProduct);
+        return R.ok("修改成功，商品已发货");
+    }
+
+    /**买家收货*/
+    @RequestMapping("/shouhuo")
+    public R shouhuo(Integer id){
+        Product resultProduct = productService.getById(id);
+        resultProduct.setState(5);
+        productService.saveOrUpdate(resultProduct);
+        return R.ok("修改成功，商品已收货");
+    }
+
+    /**买家提交订单，修改商品状态为3未发货*/
+    @RequestMapping("/noFaHuo")
+    public R noFaHuo(Integer id){
+        Product resultProduct = productService.getById(id);
+        resultProduct.setState(3);
+        productService.saveOrUpdate(resultProduct);
+        return R.ok("修改成功，商品状态已改为未发货");
+    }
+
 
 
 }

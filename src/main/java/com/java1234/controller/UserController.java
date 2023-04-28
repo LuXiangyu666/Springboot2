@@ -42,13 +42,13 @@ public class UserController {
         //String jscode2sessionUrl=weixinProperties.getJscode2sessionUrl()+"?appid="+weixinProperties.getAppid()+"&secret="+weixinProperties.getSecret()+"&js_code="+wxUserInfo.getCode()+"&grant_type=authorization_code";
 
         //获取不了配置的WeixinProperties文件数据，所以先写死
-        String jscode2sessionUrl="https://api.weixin.qq.com/sns/jscode2session"+"?appid="+"wxc09eb7f50c6af81e"+"&secret="+"4b34842cfb35dacec34217af278926aa"+"&js_code="+wxUserInfo.getCode()+"&grant_type=authorization_code";
-        System.out.println(jscode2sessionUrl);
+
+        String jscode2sessionUrl="https://api.weixin.qq.com/sns/jscode2session"+"?appid="+"wxc09eb7f50c6af81e"
+                +"&secret="+"4b34842cfb35dacec34217af278926aa"+"&js_code="+wxUserInfo.getCode()+
+                "&grant_type=authorization_code";
         String result =  httpClientUtil.sendHttpGet(jscode2sessionUrl);
-        System.out.println(result);
         JSONObject jsonobject = JSON.parseObject(result);
         String openid = jsonobject.get("openid").toString();    //将json转换为字符串格式
-        System.out.println(openid);                             //得到openID
 
         //如果数据库中用户不存在，插入用户信息；  若用户存在，则更新用户信息
         WxUserInfo resultWxUserInfo = wxUserInfoService.getOne(new QueryWrapper<WxUserInfo>().eq("openid", openid));
