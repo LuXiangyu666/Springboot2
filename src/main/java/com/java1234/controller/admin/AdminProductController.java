@@ -31,6 +31,36 @@ public class AdminProductController {
     @Value("${swiperImagesFilePath}")
     private String swiperImagesFilePath;
 
+    /**查询待审核的商品*/
+    @RequestMapping("/processList")
+    public R processList(@RequestBody PageBean pageBean){
+        Map<String,Object> map=new HashMap<>();
+        map.put("name",pageBean.getQuery().trim());
+        map.put("start",pageBean.getStart());
+        map.put("pageSize",pageBean.getPageSize());
+        System.out.println(888);
+        System.out.println(map);
+        System.out.println(888);
+        List<Product> productList = productService.list(new QueryWrapper<Product>().eq("state",1));
+        System.out.println(666);
+        System.out.println(productList);
+        System.out.println(666);
+        Long total=productService.getTotal(map);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("productList",productList);
+        resultMap.put("total",total);
+        return R.ok(resultMap);
+    }
+
+    /**更新商品审核状态*/
+    @PostMapping("/updateStatus")
+    public R updateStatus(@RequestBody Product product){
+        Product resultProduct = productService.getById(product.getId());
+        resultProduct.setState(product.getState());
+        productService.saveOrUpdate(resultProduct);
+        return R.ok("审核完成");
+    }
+
 
     /**根据条件分页查询*/
     @RequestMapping("/list")
@@ -42,7 +72,6 @@ public class AdminProductController {
         map.put("pageSize",pageBean.getPageSize());
         List<Product> productList=productService.list(map);
         Long total=productService.getTotal(map);
-
         Map<String,Object> resultMap=new HashMap<>();
         resultMap.put("productList",productList);
         resultMap.put("total",total);

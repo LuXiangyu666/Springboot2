@@ -77,8 +77,8 @@ public class ProductController {
     /**我的商品列表*/
     @GetMapping("/myproduct")
     public R myproduct(Integer id){
-        Page<Product> page=new Page<>(0,10);
-        Page<Product> pageProduct = productService.page(page, new QueryWrapper<Product>().eq("sellerId", id));
+        Page<Product> page=new Page<>(0,30);
+        Page<Product> pageProduct = productService.page(page, new QueryWrapper<Product>().eq("sellerId", id).orderByDesc("createDate"));
         List<Product> myProductList = pageProduct.getRecords();
         Map<String,Object> map=new HashMap<>();
         map.put("message",myProductList);
@@ -126,6 +126,9 @@ public class ProductController {
     public R noFaHuo(Integer id){
         Product resultProduct = productService.getById(id);
         resultProduct.setState(3);
+        int stock = resultProduct.getStock();
+        stock--;
+        resultProduct.setStock(stock);
         productService.saveOrUpdate(resultProduct);
         return R.ok("修改成功，商品状态已改为未发货");
     }
