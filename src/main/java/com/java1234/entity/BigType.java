@@ -21,6 +21,4 @@ public class BigType {
 
     @TableField(select=false)
     private List<SmallType> smallTypeList; // 商品小类集合
-
-
 }

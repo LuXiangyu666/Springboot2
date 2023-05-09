@@ -26,6 +26,4 @@ public class SmallType implements Serializable {
 
     @TableField(select = false)
     private List<Product> productList; // 商品集合
-
-
 }

@@ -1,14 +1,9 @@
 package com.java1234.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
-import java.util.List;
 
 /**商品大类 */
 @TableName("t_remark")
@@ -29,5 +24,4 @@ public class Remark {
     private String wxuserImg; //用户头像图片名
 
     private String user_name; // 用户昵称
-
 }

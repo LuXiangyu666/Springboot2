@@ -32,6 +32,4 @@ public class WxUserInfo implements Serializable {
 
     @TableField(select = false,exist = false)
     private String code; // 微信用户code 前端传来的
-
-
 }

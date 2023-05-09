@@ -188,13 +188,8 @@ public class OrderController {
         System.out.println("token = "+token);
         System.out.println("product = "+product);
 
-
         //添加商品到数据库
         Claims claims = JwtUtils.validateJWT(token).getClaims();
-//        if(claims!=null){
-//            System.out.println("openid="+claims.getId());
-//            product.setWoner_id(claims.getId());
-//        }
 
         product.setCreateDate(new Date());
 
@@ -220,9 +215,6 @@ public class OrderController {
         resultMap.put("productId",product.getId());
         return R.ok(resultMap);       //返回商品id
     }
-
-
-
 
     /**订单查询 type值 0 全部订单  1 待付款  2 待收货 3 退款/退货 */
     @RequestMapping("/list")
@@ -268,13 +260,5 @@ public class OrderController {
         Map<String,Object> map=new HashMap<>();
         map.put("message",productIdList);
         return R.ok(map);
-
-//        OrderDetail a = orderDetailService.getOne(new QueryWrapper<Order>().eq("mId", id));
     }
-
-
-
-
-
-
 }

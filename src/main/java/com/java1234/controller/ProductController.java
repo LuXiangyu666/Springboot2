@@ -40,7 +40,7 @@ public class ProductController {
     //@PostMapping用于处理请求方法的POST*类型等。
     @GetMapping("/findSwiper")
     public R findSwiper(){
-        List<Product> swiperProductList = productService.list(new QueryWrapper<Product>().eq("isSwiper", true).eq("state",2).orderByAsc("swiperSort"));
+        List<Product> swiperProductList = productService.list(new QueryWrapper<Product>().eq("isSwiper", true).eq("state",2).gt("stock", 0).orderByAsc("swiperSort"));
         Map<String,Object> map=new HashMap<>();
         map.put("message",swiperProductList);
         return R.ok(map);
@@ -52,7 +52,7 @@ public class ProductController {
     @GetMapping("/findHot")
     public R findHot(){
         Page<Product> page=new Page<>(0,8);
-        Page<Product> pageProduct = productService.page(page, new QueryWrapper<Product>().eq("isHot", true).eq("state",2).orderByAsc("hotDateTime"));
+        Page<Product> pageProduct = productService.page(page, new QueryWrapper<Product>().eq("isHot", true).eq("state",2).gt("stock", 0).orderByAsc("hotDateTime"));
         List<Product> hotProductList = pageProduct.getRecords();
         Map<String,Object> map=new HashMap<>();
         map.put("message",hotProductList);
@@ -73,7 +73,7 @@ public class ProductController {
     /**商品搜索*/
     @GetMapping("/search")
     public R search(String q){
-        List<Product> productList = productService.list(new QueryWrapper<Product>().like("name", q).eq("state",2));
+        List<Product> productList = productService.list(new QueryWrapper<Product>().like("name", q).eq("state",2).gt("stock", 0));
         Map<String,Object> map=new HashMap<>();
         map.put("message",productList);
         return R.ok(map);
@@ -101,22 +101,31 @@ public class ProductController {
 
 
 
-    /**卖家发货*/
+    /**卖家发货，以及卖家确认已退货*/
     @RequestMapping("/fahuo")
     public R fahuo(Integer id){
         Product resultProduct = productService.getById(id);
-        resultProduct.setState(4);
+        int state = resultProduct.getState();
+        state++;
+        if(state==7){       //退货后商品的库存加一
+            int stock = resultProduct.getStock();
+            stock++;
+            resultProduct.setStock(stock);
+        }
+        resultProduct.setState(state);
         productService.saveOrUpdate(resultProduct);
-        return R.ok("修改成功，商品已发货");
+        return R.ok("修改成功");
     }
 
     /**买家收货*/
     @RequestMapping("/shouhuo")
     public R shouhuo(Integer id){
         Product resultProduct = productService.getById(id);
-        resultProduct.setState(5);
+        int state = resultProduct.getState();
+        state++;
+        resultProduct.setState(state);
         productService.saveOrUpdate(resultProduct);
-        return R.ok("修改成功，商品已收货");
+        return R.ok("修改成功");
     }
 
     /**买家提交订单，修改商品状态为3未发货*/
@@ -130,7 +139,5 @@ public class ProductController {
         productService.saveOrUpdate(resultProduct);
         return R.ok("修改成功，商品状态已改为未发货");
     }
-
-
 
 }

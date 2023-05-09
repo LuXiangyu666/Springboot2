@@ -42,9 +42,6 @@ public class UploadController {
             File file = new File(realPath, newFileName);
             // 使用multipartFile接口的方法上传文件到指定位置
             multipartFile.transferTo(file);
-
-
-
             return  R.ok(newFileName);
         } catch (Exception e) {
             e.printStackTrace();

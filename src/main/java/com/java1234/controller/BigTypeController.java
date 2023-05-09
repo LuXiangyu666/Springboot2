@@ -48,7 +48,7 @@ public class BigTypeController {
             List<SmallType> smallTypeList = smallTypeService.list(new QueryWrapper<SmallType>().eq("bigTypeId", bigType.getId()));
             bigType.setSmallTypeList(smallTypeList);
             for(SmallType smallType:smallTypeList){
-                List<Product> productList = productService.list(new QueryWrapper<Product>().eq("typeId", smallType.getId()).eq("state",2));
+                List<Product> productList = productService.list(new QueryWrapper<Product>().eq("typeId", smallType.getId()).eq("state",2).gt("stock", 0));
                 smallType.setProductList(productList);
             }
         }
