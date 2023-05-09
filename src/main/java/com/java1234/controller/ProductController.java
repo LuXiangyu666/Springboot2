@@ -22,10 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 /** 商品Controller*/
+//@RestController：用于标注控制层组件,这个controller里的方法的返回值都以响应形式返回
 @RestController
+//@RequestMapping：提供路由信息，负责URL到Controller中的具体函数的映射。
 @RequestMapping("/product")
 public class ProductController {
 
+    //@Autowired：自动导入依赖的bean
     @Autowired
     private IProductService productService;
 
@@ -33,6 +36,8 @@ public class ProductController {
     private IProductSwiperImageService productSwiperImageService;
 
     /**查询轮播商品*/
+    //@GetMapping用于处理请求方法的GET类型
+    //@PostMapping用于处理请求方法的POST*类型等。
     @GetMapping("/findSwiper")
     public R findSwiper(){
         List<Product> swiperProductList = productService.list(new QueryWrapper<Product>().eq("isSwiper", true).eq("state",2).orderByAsc("swiperSort"));
@@ -87,21 +92,14 @@ public class ProductController {
 
     /**修改我的商品 */
     @RequestMapping("/revise")
+    //@RequestHeader，可以将请求头中变量值映射到控制器的参数中
+    //@ResponseBody的作用其实是将java对象转为json格式的数据
     public R save(@RequestBody Product product){
         productService.update(product);
         return R.ok();
     }
 
-//    11111111111111111111111111
-//    /**更新订单状态*/
-//    @PostMapping("/updateStatus")
-//    public R updateStatus(@RequestBody Order order){
-//        Order resultOrder = orderService.getById(order.getId());
-//        resultOrder.setStatus(order.getStatus());
-//        orderService.saveOrUpdate(resultOrder);
-//        return R.ok();
-//    }
-//    1111111111111111111111111
+
 
     /**卖家发货*/
     @RequestMapping("/fahuo")

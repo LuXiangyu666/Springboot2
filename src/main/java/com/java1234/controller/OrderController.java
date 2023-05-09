@@ -45,6 +45,7 @@ public class OrderController {
     /** 创建订单，返回订单号*/
     @RequestMapping("/create")
     @Transactional
+    //@RequestHeader注解，可以将请求头中变量值映射到控制器的参数中
     public R create(@RequestBody Order order, @RequestHeader(value = "token")String token){
         // 通过token获取openid
         System.out.println("token="+token);

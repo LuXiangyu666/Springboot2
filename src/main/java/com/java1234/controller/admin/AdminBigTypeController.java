@@ -28,6 +28,7 @@ public class AdminBigTypeController {
     @Autowired
     private ISmallTypeService smallTypeService;
 
+    //@Value,该注解的作用是将我们配置文件的属性读出来
     @Value("${bigTypeImagesFilePath}")
     private String bigTypeImagesFilePath;
 

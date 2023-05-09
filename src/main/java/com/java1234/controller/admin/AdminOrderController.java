@@ -53,10 +53,12 @@ public class AdminOrderController {
 
     /**删除*/
     @GetMapping("/delete/{id}")
+    //通过 @PathVariable 可以将 URL 中占位符参数绑定到控制器处理方法的入参中
     public R delete(@PathVariable(value = "id")Integer id){
         // 删除订单细表数据
         orderDetailService.remove(new QueryWrapper<OrderDetail>().eq("mId",id));
         orderService.removeById(id);
         return R.ok();
     }
+
 }
