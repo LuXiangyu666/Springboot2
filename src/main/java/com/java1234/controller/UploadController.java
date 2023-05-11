@@ -81,6 +81,37 @@ public class UploadController {
             return  ("操作异常");
         }
     }
+
+    /**上传投诉图片, */
+    @RequestMapping("/shop/complaintImg")
+    @ResponseBody
+    public R complaintImg(HttpServletRequest request, HttpServletResponse response) {
+        MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
+        MultipartFile multipartFile = req.getFile("file");
+        // 获取上传文件原始名
+        String originalName = multipartFile.getOriginalFilename();
+        // 设置上传文件的保存路径
+        String realPath = "D:\\DasiX\\complaintImg";
+        String newFileName = "";
+        try {
+            File dir = new File(realPath);
+            // 如果保存文件的地址不存在，就先创建目录
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            // 使用UUID重新命名上传的文件名 + 文件的后缀名
+            newFileName = "shop_" + UUID.randomUUID() + originalName.substring(originalName.lastIndexOf("."));
+            File file = new File(realPath, newFileName);
+            // 使用multipartFile接口的方法上传文件到指定位置
+            multipartFile.transferTo(file);
+            System.out.println("上传成功");
+            return  R.ok(newFileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  R.ok("操作异常");
+        }
+    }
+
 }
 
 

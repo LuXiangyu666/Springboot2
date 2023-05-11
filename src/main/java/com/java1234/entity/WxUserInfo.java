@@ -23,6 +23,7 @@ public class WxUserInfo implements Serializable {
 
     private String wxuserImg; // 用户头像上传后的图片名
 
+    private Integer score; // 信誉分
 
     @JsonSerialize(using=CustomDateTimeSerializer.class)
     private Date registerDate; // 注册日期

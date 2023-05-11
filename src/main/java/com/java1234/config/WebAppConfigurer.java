@@ -27,6 +27,7 @@ public class WebAppConfigurer implements WebMvcConfigurer {
         registry.addResourceHandler("/image/swiper/**").addResourceLocations("file:D:\\DasiX\\swiperImgs\\");
         registry.addResourceHandler("/image/bigType/**").addResourceLocations("file:D:\\DasiX\\bigTypeImgs\\");
         registry.addResourceHandler("/image/product/**").addResourceLocations("file:D:\\DasiX\\productImgs\\");
+        registry.addResourceHandler("/image/complaint/**").addResourceLocations("file:D:\\DasiX\\complaintImg\\");
         registry.addResourceHandler("/image/wxuserImg/**").addResourceLocations("file:D:\\DasiX\\wxuserImg\\");
         registry.addResourceHandler("/image/productSwiperImgs/**").addResourceLocations("file:D:\\DasiX\\\\productImgs\\");
         // registry.addResourceHandler("/image/productIntroImgs/**").addResourceLocations("file:D:\\DasiX\\productIntroImgs\\");

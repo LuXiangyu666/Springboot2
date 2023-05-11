@@ -3,13 +3,11 @@ package com.java1234.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.java1234.entity.Order;
-import com.java1234.entity.Product;
-import com.java1234.entity.ProductSwiperImage;
-import com.java1234.entity.R;
+import com.java1234.entity.*;
 import com.java1234.mapper.ProductMapper;
 import com.java1234.service.IProductService;
 import com.java1234.service.IProductSwiperImageService;
+import com.java1234.service.IWxUserInfoService;
 import com.java1234.util.JwtUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,9 @@ public class ProductController {
 
     @Autowired
     private IProductSwiperImageService productSwiperImageService;
+
+    @Autowired
+    private IWxUserInfoService wxUserInfoService;
 
     /**查询轮播商品*/
     //@GetMapping用于处理请求方法的GET类型
@@ -125,6 +126,13 @@ public class ProductController {
         state++;
         resultProduct.setState(state);
         productService.saveOrUpdate(resultProduct);
+        int sellerId = resultProduct.getSellerId();
+        WxUserInfo seller = wxUserInfoService.getById(sellerId);
+        int score = seller.getScore();
+        score = score + 2;
+        seller.setScore(score);
+        System.out.println("seller="+seller);
+        wxUserInfoService.saveOrUpdate(seller);
         return R.ok("修改成功");
     }
 

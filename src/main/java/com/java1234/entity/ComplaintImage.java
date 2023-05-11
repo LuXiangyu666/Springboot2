@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**产品轮播图片*/
-@TableName("t_product_swiper_image")
+@TableName("t_complaintimage")
 @Data
-public class ProductSwiperImage {
+public class ComplaintImage {
 
     private Integer id; // 编号
 
@@ -14,6 +14,6 @@ public class ProductSwiperImage {
 
     private Integer sort; // 排列序号 从小到大排序
 
-    private Integer productId; // 所属产品
+    private Integer complaintId; // 所属投诉
 
 }
