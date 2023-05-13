@@ -56,7 +56,7 @@ public class OrderController {
             System.out.println("openid="+claims.getId());
             order.setUserId(claims.getId());
         }
-        order.setOrderNo("JAVA"+DateUtil.getCurrentDateStr());
+        order.setOrderNo("Order"+DateUtil.getCurrentDateStr());
         order.setCreateDate(new Date());
 
         OrderDetail[] goods = order.getGoods();

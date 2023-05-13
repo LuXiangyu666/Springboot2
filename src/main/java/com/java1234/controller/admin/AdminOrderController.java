@@ -70,7 +70,13 @@ public class AdminOrderController {
         seller.setScore(score);
         System.out.println("seller="+seller);
         wxUserInfoService.saveOrUpdate(seller);
-        return R.ok("审核完成");
+        if(complaint.getState()==2){
+            return R.ok("审核通过");
+        }
+        else{
+            return R.ok("审核未通过");
+        }
+
     }
 
 

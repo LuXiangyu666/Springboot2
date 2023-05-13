@@ -72,6 +72,7 @@ public class UserController {
         resultMap.put("token",token);
         WxUserInfo User = wxUserInfoService.getOne(new QueryWrapper<WxUserInfo>().eq("openid", openid));
         resultMap.put("id",User.getId());
+        resultMap.put("score",User.getScore());
         return R.ok(resultMap);
     }
 }
