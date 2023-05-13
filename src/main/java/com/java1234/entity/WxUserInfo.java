@@ -25,6 +25,12 @@ public class WxUserInfo implements Serializable {
 
     private Integer score; // 信誉分
 
+    private String school; // 学校名
+
+    private String stu_id; // 学号
+
+    private String state; // 账号激活状态
+
     @JsonSerialize(using=CustomDateTimeSerializer.class)
     private Date registerDate; // 注册日期
 

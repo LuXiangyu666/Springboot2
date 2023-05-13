@@ -49,30 +49,52 @@ public class UserController {
         String result =  httpClientUtil.sendHttpGet(jscode2sessionUrl);
         JSONObject jsonobject = JSON.parseObject(result);
         String openid = jsonobject.get("openid").toString();    //将json转换为字符串格式
+        System.out.println("openid====="+openid);
+
+        Map<String,Object> resultMap=new HashMap<>();      //用于保存返回给前端的结果
 
         //如果数据库中用户不存在，插入用户信息；  若用户存在，则更新用户信息
         WxUserInfo resultWxUserInfo = wxUserInfoService.getOne(new QueryWrapper<WxUserInfo>().eq("openid", openid));
+        System.out.println("resultWxUserInfo====="+resultWxUserInfo);
         if(resultWxUserInfo==null){
             System.out.println("不存在 插入用户");
-            wxUserInfo.setOpenid(openid);
-            wxUserInfo.setRegisterDate(new Date());
-            wxUserInfo.setLastLoginDate(new Date());
-            wxUserInfoService.save(wxUserInfo);
+            String stuId = wxUserInfo.getStu_id();
+            WxUserInfo stu = wxUserInfoService.getOne(new QueryWrapper<WxUserInfo>().eq("stu_id", stuId));
+            System.out.println("stu====="+stu);
+            if(stu==null){
+                resultMap.put("result",0);
+                return R.ok(resultMap);
+            }
+            stu.setNickName(wxUserInfo.getNickName());
+            stu.setWxuserImg(wxUserInfo.getWxuserImg());
+            stu.setAvatarUrl(wxUserInfo.getAvatarUrl());
+            stu.setOpenid(openid);
+            stu.setState("已激活");
+            stu.setRegisterDate(new Date());
+            stu.setLastLoginDate(new Date());
+            wxUserInfoService.saveOrUpdate(stu);
         }else{
+            WxUserInfo stu2 = wxUserInfoService.getOne(new QueryWrapper<WxUserInfo>()
+                    .eq("stu_id", wxUserInfo.getStu_id()));
+            System.out.println("stu2====="+stu2);
+            if(stu2==null){
+                resultMap.put("result",0);
+                return R.ok(resultMap);
+            }
             System.out.println("存在 更新用户");
-            resultWxUserInfo.setNickName(wxUserInfo.getNickName());
-            resultWxUserInfo.setAvatarUrl(wxUserInfo.getAvatarUrl());
-            resultWxUserInfo.setWxuserImg(wxUserInfo.getWxuserImg());
-            resultWxUserInfo.setLastLoginDate(new Date());
-            wxUserInfoService.updateById(resultWxUserInfo);     //由于插入的记录缺少id,所以没法更新。
+            stu2.setNickName(wxUserInfo.getNickName());
+            stu2.setAvatarUrl(wxUserInfo.getAvatarUrl());
+            stu2.setWxuserImg(wxUserInfo.getWxuserImg());
+            stu2.setLastLoginDate(new Date());
+            wxUserInfoService.updateById(stu2);     //由于插入的记录缺少id,所以没法更新。
         }
         // 利用jwt生成token返回到前端
         String token = JwtUtils.createJWT(openid, wxUserInfo.getNickName(), SystemConstant.JWT_TTL);
-        Map<String,Object> resultMap=new HashMap<>();
         resultMap.put("token",token);
         WxUserInfo User = wxUserInfoService.getOne(new QueryWrapper<WxUserInfo>().eq("openid", openid));
         resultMap.put("id",User.getId());
         resultMap.put("score",User.getScore());
+        resultMap.put("result",1);
         return R.ok(resultMap);
     }
 }
