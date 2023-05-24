@@ -1,0 +1,4 @@
+# Springboot2
+毕业设计后端代码
+为前端小程序以及后台管理网站提供服务接口
+使用SpringBoot2和Mybatis Plus框架，以及lombok插件
